@@ -1,5 +1,7 @@
 # bristol_exchange
 
+[![CircleCI](https://circleci.com/gh/KaraboMa/KaraboMa/tree/main.svg?style=svg)](https://circleci.com/gh/KaraboMa/KaraboMa/tree/main)
+
 A new Flutter project.
 
 ## Getting Started
