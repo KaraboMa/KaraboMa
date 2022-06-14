@@ -6,16 +6,6 @@ orbs:
     hello: circleci/hello-build@0.0.5
     node: circleci/node@4.7.0
 
-commands:
-  sayhello:
-    description: "A very simple command for demonstration purposes"
-    parameters:
-      to:
-        type: string
-        default: "Hello World"
-    steps:
-      - run: echo << parameters.to >>
-
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
@@ -29,53 +19,15 @@ jobs:
     steps:
       - checkout
       - run:
-          name: "Say hello"
-          command: "echo Hello, World!"
+          name: The First Step
+          command: |
+            echo 'Hello World!'
+            echo 'This is the delivery pipeline'
+      - run:
+          name: "The Second Step"
+          command: |
+            ls -al
+            echo '^^^The files in your repo^^^'
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
-workflows:
-  say-hello-workflow:
-    jobs:
-      - say-hello
-upload-to-codecov:
-    jobs:
-      - checkout
-      - codecov/upload
-
-build-test-and-deploy:
-    jobs:
-      - build
-      - test1:
-          requires:
-            - build
-      - test2:
-          requires:
-            - test1
-      - deploy:
-          requires:
-            - test2
-
-build_accept_deploy:
-    jobs:
-      - build
-      - acceptance_test_1:
-          requires:
-            - build
-      - acceptance_test_2:
-          requires:
-            - build
-      - acceptance_test_3:
-          requires:
-            - build
-      - acceptance_test_4:
-          requires:
-            - build
-      - deploy:
-          requires:
-            - acceptance_test_1
-            - acceptance_test_2
-            - acceptance_test_3
-            - acceptance_test_4
-
-
