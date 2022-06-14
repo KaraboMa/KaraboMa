@@ -4,6 +4,7 @@ version: 2.1
 
 orbs:
     hello: circleci/hello-build@0.0.5
+    node: circleci/node@4.7.0
 
 commands:
   sayhello:
@@ -37,3 +38,44 @@ workflows:
   say-hello-workflow:
     jobs:
       - say-hello
+upload-to-codecov:
+    jobs:
+      - checkout
+      - codecov/upload
+
+build-test-and-deploy:
+    jobs:
+      - build
+      - test1:
+          requires:
+            - build
+      - test2:
+          requires:
+            - test1
+      - deploy:
+          requires:
+            - test2
+
+build_accept_deploy:
+    jobs:
+      - build
+      - acceptance_test_1:
+          requires:
+            - build
+      - acceptance_test_2:
+          requires:
+            - build
+      - acceptance_test_3:
+          requires:
+            - build
+      - acceptance_test_4:
+          requires:
+            - build
+      - deploy:
+          requires:
+            - acceptance_test_1
+            - acceptance_test_2
+            - acceptance_test_3
+            - acceptance_test_4
+
+
