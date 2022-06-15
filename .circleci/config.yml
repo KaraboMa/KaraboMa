@@ -58,23 +58,10 @@ Now-Complete:
           command: |
             echo 'The work is now complete.'
 
-# Invoke jobs via workflows
-# See: https://circleci.com/docs/2.0/configuration-reference/#workflows
+
 workflows:
-  Example-Workflow:
+  upload-to-codecov:
     jobs:
-      - Hello-World
-      - Fetch-Code:
-          requires:
-            - Hello-World
-      - Using-Node:
-          requires:
-            - Fetch-Code
-      - Hold-for-Approval:
-          type: approval
-          requires:
-            - Using-Node
-            - Fetch-Code
-      - Now-Complete:
-          requires:
-            - Hold-for-Approval
+      - node/test:
+          post-steps:
+            
